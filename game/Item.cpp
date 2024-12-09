@@ -921,7 +921,7 @@ void idMoveableItem::Restore( idRestoreGame *savefile ) {
 	savefile->ReadString(fxCollide); // darknar collide data
 	savefile->ReadString(mtrCollide); // darknar
 	savefile->ReadInt(nextSoundTime); // darknar collide data
-	savefile->WriteInt(nextCollideFxTime); // Blood Mod
+	savefile->ReadInt(nextCollideFxTime); // Blood Mod
 }
 
 /*
