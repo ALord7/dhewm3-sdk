@@ -4958,8 +4958,8 @@ void idAnimatedEntity::Restore( idRestoreGame *savefile ) {
 		}
 	}
 
-	savefile->WriteInt(nextBloodPoolTime); // Blood Mod
-	savefile->WriteInt(nextSplatTime); // Blood Mod
+	savefile->ReadInt(nextBloodPoolTime); // Blood Mod
+	savefile->ReadInt(nextSplatTime); // Blood Mod
 }
 
 /*
