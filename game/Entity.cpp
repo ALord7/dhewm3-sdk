@@ -4932,6 +4932,9 @@ void idAnimatedEntity::Save( idSaveGame *savefile ) const {
 
 	// Wounds are very temporary, ignored at this time
 	//damageEffect_t			*damageEffects;
+
+	savefile->WriteInt(nextBloodPoolTime); // Blood Mod
+	savefile->WriteInt(nextSplatTime); // Blood Mod
 }
 
 /*
@@ -4954,6 +4957,9 @@ void idAnimatedEntity::Restore( idRestoreGame *savefile ) {
 			gameRenderWorld->UpdateEntityDef( modelDefHandle, &renderEntity );
 		}
 	}
+
+	savefile->WriteInt(nextBloodPoolTime); // Blood Mod
+	savefile->WriteInt(nextSplatTime); // Blood Mod
 }
 
 /*
