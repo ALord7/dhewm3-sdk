@@ -75,6 +75,9 @@ idMoveable::idMoveable( void ) {
 	unbindOnDeath		= false;
 	allowStep			= false;
 	canDamage			= false;
+
+	nextSoundTime = 0; // darknar collide data
+	nextCollideFxTime = 0; // Blood Mod	
 }
 
 /*
@@ -126,6 +129,7 @@ void idMoveable::Spawn( void ) {
 	unbindOnDeath = spawnArgs.GetBool( "unbindondeath" );
 
 	fxCollide = spawnArgs.GetString( "fx_collide" );
+	mtrCollide = spawnArgs.GetString("mtr_collide"); // darknar
 	nextCollideFxTime = 0;
 
 	fl.takedamage = true;
@@ -191,6 +195,9 @@ void idMoveable::Save( idSaveGame *savefile ) const {
 	savefile->WriteString( brokenModel );
 	savefile->WriteString( damage );
 	savefile->WriteString( fxCollide );
+
+	savefile->WriteString(mtrCollide); // darknar
+	
 	savefile->WriteInt( nextCollideFxTime );
 	savefile->WriteFloat( minDamageVelocity );
 	savefile->WriteFloat( maxDamageVelocity );
@@ -217,6 +224,9 @@ void idMoveable::Restore( idRestoreGame *savefile ) {
 	savefile->ReadString( brokenModel );
 	savefile->ReadString( damage );
 	savefile->ReadString( fxCollide );
+
+	savefile->ReadString(mtrCollide); // darknar
+	
 	savefile->ReadInt( nextCollideFxTime );
 	savefile->ReadFloat( minDamageVelocity );
 	savefile->ReadFloat( maxDamageVelocity );
@@ -293,11 +303,27 @@ bool idMoveable::Collide( const trace_t &collision, const idVec3 &velocity ) {
 		}
 	}
 
+	// darknar start
+	if (fxCollide.Length() && gameLocal.time > nextCollideFxTime) {
+		if (mtrCollide.Length()) {
+			gameLocal.ProjectDecal(collision.c.point, -collision.c.normal, 8.0f, true, spawnArgs.GetFloat("gib_decal_size", "16.0"), mtrCollide);
+		}
+		// darknar end
+		// Blood mod start
+		int CollideFxTime;
+		idEntityFx::StartFx(fxCollide, &collision.c.point, NULL, this, false);
+		if (!spawnArgs.GetInt("next_collide_fx_time", "500", CollideFxTime)) {
+			CollideFxTime = spawnArgs.GetInt(va("next_collide_fx_time"), "500"); // Set a delay for the next blood splat to appear in Fx effects. 500 = default
+		}
+		nextCollideFxTime = gameLocal.time + CollideFxTime;
+	}
+	// Blood mod end
+/*
 	if ( fxCollide.Length() && gameLocal.time > nextCollideFxTime ) {
 		idEntityFx::StartFx( fxCollide, &collision.c.point, NULL, this, false );
 		nextCollideFxTime = gameLocal.time + 3500;
 	}
-
+*/
 	return false;
 }
 
