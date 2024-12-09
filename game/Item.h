@@ -177,6 +177,8 @@ private:
 	int						smokeTime;
 	int						nextSoundTime; // darknar, fx collide data
 	idStr					fxCollide; // darknar, fx collide data
+	idStr                                   mtrCollide; // darknar
+	int                                     nextCollideFxTime; // Blood Mod
 	void					Gib( const idVec3 &dir, const char *damageDefName );
 
 	void					Event_DropToFloor( void );
