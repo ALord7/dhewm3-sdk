@@ -309,7 +309,7 @@ bool idMoveable::Collide( const trace_t &collision, const idVec3 &velocity ) {
 			gameLocal.ProjectDecal(collision.c.point, -collision.c.normal, 8.0f, true, spawnArgs.GetFloat("gib_decal_size", "16.0"), mtrCollide);
 		}
 		// darknar end
-		// Blood mod start
+		// Blood Mod start
 		int CollideFxTime;
 		idEntityFx::StartFx(fxCollide, &collision.c.point, NULL, this, false);
 		if (!spawnArgs.GetInt("next_collide_fx_time", "500", CollideFxTime)) {
@@ -317,7 +317,7 @@ bool idMoveable::Collide( const trace_t &collision, const idVec3 &velocity ) {
 		}
 		nextCollideFxTime = gameLocal.time + CollideFxTime;
 	}
-	// Blood mod end
+	// Blood Mod end
 /*
 	if ( fxCollide.Length() && gameLocal.time > nextCollideFxTime ) {
 		idEntityFx::StartFx( fxCollide, &collision.c.point, NULL, this, false );
