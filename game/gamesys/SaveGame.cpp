@@ -765,7 +765,11 @@ idSaveGame::WriteBuildNumber
 ======================
 */
 void idSaveGame::WriteBuildNumber( const int value ) {
+#if DHEWM3_BUILD_NUMBER // for compat idTech4A++
+	file->WriteInt( DHEWM3_BUILD_NUMBER );
+#else
 	file->WriteInt( BUILD_NUMBER );
+#endif
 }
 
 /***********************************************************************
